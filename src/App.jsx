@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Card from './components/Card'
 
 function App() {
   const [data, setData] = useState(null);
@@ -45,9 +46,7 @@ function App() {
   return (
     <>
       {data && data.map(p => (
-        <div key={p.id}>
-          <p>{p.name}</p>
-        </div>
+        <Card key={p.id} name={p.name} id={p.id} image={p.image} />
       ))}
     </>
   )
