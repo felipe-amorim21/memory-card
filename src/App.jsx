@@ -15,7 +15,22 @@ function App() {
           throw new Error("Erro na requisição");
         }
         const result = await response.json();
-        setData(result);
+
+        const pokemonFetch = result.results.map(pokemon => (
+          fetch(pokemon.url).then( res => res.json())
+        ))
+
+        const detailedPokemon = await Promise.all(pokemonFetch);
+
+
+        const pokemonObject = detailedPokemon.map(p => ({
+          id: p.id,
+          name: p.name,
+          image: p.sprites.front_default,
+        }))
+        
+        setData(pokemonObject);
+
       }
       catch(err){
         setError(err);
@@ -25,11 +40,15 @@ function App() {
     fetchData();
   }, []);
 
-
+  console.log(data);
 
   return (
     <>
-      
+      {data && data.map(p => (
+        <div key={p.id}>
+          <p>{p.name}</p>
+        </div>
+      ))}
     </>
   )
 }
