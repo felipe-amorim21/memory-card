@@ -41,6 +41,13 @@ function App() {
     fetchData();
   }, []);
 
+
+  const shuffleCards = (data) => {
+    return data.sort(() => Math.random() - 0.5);
+  }
+
+  data && shuffleCards(data)
+
   const cardsToShow = data ? data.slice(0 , 9) : []
 
   return (
