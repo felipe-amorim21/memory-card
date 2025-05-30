@@ -41,11 +41,11 @@ function App() {
     fetchData();
   }, []);
 
-  console.log(data);
+  const cardsToShow = data ? data.slice(0 , 9) : []
 
   return (
     <>
-      {data && data.map(p => (
+      {cardsToShow && cardsToShow.map(p => (
         <Card key={p.id} name={p.name} id={p.id} image={p.image} />
       ))}
     </>
