@@ -10,6 +10,10 @@ function App() {
   const [clickedCards, setClickedCards] = useState([]);
   const [score, setScore] = useState(0);
 
+  const shuffleCards = (data) => {
+    return data.sort(() => Math.random() - 0.5);
+  }
+
   useEffect(() => {
     const fetchData = async ()=> {
       try{
@@ -31,7 +35,8 @@ function App() {
           name: p.name,
           image: p.sprites.front_default,
         }))
-        
+
+        shuffleCards(pokemonObject)
         setData(pokemonObject);
 
       }
@@ -43,14 +48,6 @@ function App() {
     fetchData();
   }, []);
 
-  
-
-
-  const shuffleCards = (data) => {
-    return data.sort(() => Math.random() - 0.5);
-  }
-
-  data && shuffleCards(data)
 
   const cardsToShow = data ? data.slice(0 , 9) : []
 
@@ -60,6 +57,7 @@ function App() {
     } else {
       setClickedCards((prev) => [...prev, cardId]);
       setScore(score + 1);
+      shuffleCards(data);
     }
   }
 
