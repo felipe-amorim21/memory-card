@@ -7,6 +7,7 @@ import Card from './components/Card'
 function App() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
+  const [clickedCards, setClickedCards] = useState([]);
 
   useEffect(() => {
     const fetchData = async ()=> {
@@ -41,6 +42,8 @@ function App() {
     fetchData();
   }, []);
 
+  
+
 
   const shuffleCards = (data) => {
     return data.sort(() => Math.random() - 0.5);
@@ -50,10 +53,18 @@ function App() {
 
   const cardsToShow = data ? data.slice(0 , 9) : []
 
+  const handleClick = (cardId) => {
+    if(clickedCards.includes(cardId)){
+      console.log("Game Over");
+    } else {
+      setClickedCards((prev) => [...prev, cardId]);
+    }
+  }
+
   return (
     <>
       {cardsToShow && cardsToShow.map(p => (
-        <Card key={p.id} name={p.name} id={p.id} image={p.image} />
+        <Card key={p.id} id={p.id} name={p.name} image={p.image} onClick={handleClick}/>
       ))}
     </>
   )
