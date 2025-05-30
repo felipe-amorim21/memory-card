@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -10,9 +10,11 @@ function App() {
   const [clickedCards, setClickedCards] = useState([]);
   const [score, setScore] = useState(0);
   const [gameStatus, setGameStatus] = useState('');
+  const [bestScore, setBestScore] = useState(0);
 
   const shuffleCards = (data) => {
-    return data.sort(() => Math.random() - 0.5);
+    const newData = [...data];
+    return newData.sort(() => Math.random() - 0.5);
   }
 
   useEffect(() => {
@@ -37,8 +39,8 @@ function App() {
           image: p.sprites.front_default,
         }))
 
-        shuffleCards(pokemonObject)
-        setData(pokemonObject);
+        
+        setData(shuffleCards(pokemonObject));
 
       }
       catch(err){
@@ -50,17 +52,25 @@ function App() {
   }, []);
 
 
+  const updateBestScore = (score) => {
+    if(score > bestScore){
+      setBestScore(score);
+    }
+  }
+
   const cardsToShow = data ? data.slice(0 , 9) : []
 
   const handleClick = (cardId) => {
     if(clickedCards.includes(cardId)){
       setGameStatus('Você Perdeu, Game Over');
+      updateBestScore(score);
+      setScore(0);
     } else {
       setClickedCards((prev) => [...prev, cardId]);
       setScore(score + 1);
-      shuffleCards(data);
+      setData(shuffleCards(data));
 
-      if(clickedCards.length + 1 === data.length + 1) {
+      if(clickedCards.length === data.length) {
         setGameStatus("Parabéns, Você Ganhou!")
       }
     }
@@ -68,8 +78,9 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className='Score'>
         Score: {score}
+        Best Score: {bestScore}
       </div>
       <div className='card-container'>
         {cardsToShow && cardsToShow.map(p => (
