@@ -58,13 +58,21 @@ function App() {
     }
   }
 
+  const resetgame = () => {
+    setScore(0);
+    setClickedCards([]);
+    setGameStatus('');
+    setData((data) => shuffleCards(data));
+  }
+
+
   const cardsToShow = data ? data.slice(0 , 9) : []
 
   const handleClick = (cardId) => {
     if(clickedCards.includes(cardId)){
       setGameStatus('Você Perdeu, Game Over');
       updateBestScore(score);
-      setScore(0);
+      resetgame();
     } else {
       setClickedCards((prev) => [...prev, cardId]);
       setScore(score + 1);
