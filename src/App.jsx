@@ -1,6 +1,4 @@
 import { useState, useEffect, use } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Card from './components/Card'
 
@@ -72,7 +70,6 @@ function App() {
     if(clickedCards.includes(cardId)){
       setGameStatus('Você Perdeu, Game Over');
       updateBestScore(score);
-      resetgame();
     } else {
       setClickedCards((prev) => [...prev, cardId]);
       setScore(prevScore => prevScore + 1);
@@ -81,18 +78,20 @@ function App() {
       if(clickedCards.length === data.length) {
         setGameStatus("Parabéns, Você Ganhou!")
         updateBestScore(score);
-        resetgame();
       }
     }
   }
 
   return (
     <>
-      {gameStatus && <div className='game-status'><h2>{gameStatus}</h2></div>}
+      
       <div className='Score'>
-        Score: {score}
-        Best Score: {bestScore}
+         Score: {score} | Best Score: {bestScore}
       </div>
+      {gameStatus && <div className='game-status'>
+        <h2>{gameStatus}</h2>
+        <button onClick={resetgame}>Reiniciar Jogo</button>
+        </div>}
       <div className='card-container'>
         {cardsToShow && cardsToShow.map(p => (
         <Card key={p.id} id={p.id} name={p.name} image={p.image} onClick={handleClick}/>
