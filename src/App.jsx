@@ -63,9 +63,12 @@ function App() {
 
   return (
     <>
-      {cardsToShow && cardsToShow.map(p => (
+      <div className='card-container'>
+        {cardsToShow && cardsToShow.map(p => (
         <Card key={p.id} id={p.id} name={p.name} image={p.image} onClick={handleClick}/>
-      ))}
+        ))}
+      </div>
+      
     </>
   )
 }
