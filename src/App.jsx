@@ -9,6 +9,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [gameStatus, setGameStatus] = useState('');
   const [bestScore, setBestScore] = useState(0);
+  const [loading, setLoading] = useState(true)
 
   const shuffleCards = (data) => {
     const newData = [...data];
@@ -39,10 +40,12 @@ function App() {
 
         
         setData(shuffleCards(pokemonObject));
+        setLoading(false);
 
       }
       catch(err){
         setError(err);
+        setLoading(false);
       }
     }
 
@@ -81,6 +84,15 @@ function App() {
       }
     }
   }
+
+  if (loading) {
+  return (
+    <div className="spinner-container">
+      <div className="spinner"></div>
+      <p>Carregando Pokémon...</p>
+    </div>
+  );
+}
 
   return (
     <>
