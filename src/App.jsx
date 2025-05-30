@@ -75,17 +75,20 @@ function App() {
       resetgame();
     } else {
       setClickedCards((prev) => [...prev, cardId]);
-      setScore(score + 1);
+      setScore(prevScore => prevScore + 1);
       setData(shuffleCards(data));
 
       if(clickedCards.length === data.length) {
         setGameStatus("Parabéns, Você Ganhou!")
+        updateBestScore(score);
+        resetgame();
       }
     }
   }
 
   return (
     <>
+      {gameStatus && <div className='game-status'><h2>{gameStatus}</h2></div>}
       <div className='Score'>
         Score: {score}
         Best Score: {bestScore}
