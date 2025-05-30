@@ -8,6 +8,7 @@ function App() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [clickedCards, setClickedCards] = useState([]);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     const fetchData = async ()=> {
@@ -58,11 +59,15 @@ function App() {
       console.log("Game Over");
     } else {
       setClickedCards((prev) => [...prev, cardId]);
+      setScore(score + 1);
     }
   }
 
   return (
     <>
+      <div>
+        Score: {score}
+      </div>
       <div className='card-container'>
         {cardsToShow && cardsToShow.map(p => (
         <Card key={p.id} id={p.id} name={p.name} image={p.image} onClick={handleClick}/>
