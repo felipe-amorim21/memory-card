@@ -9,6 +9,7 @@ function App() {
   const [error, setError] = useState(null);
   const [clickedCards, setClickedCards] = useState([]);
   const [score, setScore] = useState(0);
+  const [gameStatus, setGameStatus] = useState('');
 
   const shuffleCards = (data) => {
     return data.sort(() => Math.random() - 0.5);
@@ -53,11 +54,15 @@ function App() {
 
   const handleClick = (cardId) => {
     if(clickedCards.includes(cardId)){
-      console.log("Game Over");
+      setGameStatus('Você Perdeu, Game Over');
     } else {
       setClickedCards((prev) => [...prev, cardId]);
       setScore(score + 1);
       shuffleCards(data);
+
+      if(clickedCards.length + 1 === data.length + 1) {
+        setGameStatus("Parabéns, Você Ganhou!")
+      }
     }
   }
 
